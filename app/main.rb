@@ -22,17 +22,6 @@ class Presentation
 
   def render_page
     current_page = pages[@page]
-    @args.outputs.solids << {
-      x: 0,
-      y: 0,
-      w: 1280,
-      h: 720,
-      r: 0,
-      g: 80,
-      b: 40,
-      a: 255
-    }
-
     current_page[:labels].each do |label|
       @args.outputs.labels << label
     end

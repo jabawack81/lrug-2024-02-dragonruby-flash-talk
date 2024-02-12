@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TicTacToe
   attr_gtk # class macro that adds outputs, inputs, state, etc to class
 
@@ -29,9 +31,7 @@ class TicTacToe
   end
 
   def render_board
-    outputs.borders << all_spaces.map do |space| # outputs borders for all board spaces
-      space.hitbox
-    end
+    outputs.borders << all_spaces.map(&:hitbox)
 
     hovered_box = all_spaces.find do |space|
       inputs.mouse.inside_rect?(space.hitbox) && !space.piece
@@ -216,7 +216,7 @@ class TicTacToe
   # NOT have pieces in them.
 
   def filled_spaces
-    all_spaces.reject { |space| !space.piece } # reject spaces with no pieces in them
+    all_spaces.select(&:piece) # reject spaces with no pieces in them
   end
 
   # Defines all spaces on the board.
