@@ -21,6 +21,7 @@ class Presentation
   end
 
   def render_page
+    @args.outputs.background_color = [255, 255, 255]
     current_page = pages[@page]
     current_page[:labels].each do |label|
       @args.outputs.labels << label
@@ -52,7 +53,8 @@ class Presentation
     {
       labels: [
         title("Unleashing Creativity with DragonRuby:"),
-        sub_title("A Modern Game Engine for Everyone")
+        sub_title("A Modern Game Engine for Everyone"),
+        { x: (WINDOW_WIDTH / 2), y: 50, anchor_x: 0.5, anchor_y: 0.5, text: "A talk by Paolo Fabbry" }
       ],
       sprites: [
         { x: (WINDOW_WIDTH - 630) / 2, y: 80, w: 630, h: 500, path: "/sprites/dragonruby_logo.png", angle: 0 }
