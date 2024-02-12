@@ -45,7 +45,8 @@ class Presentation
       how_it_works_1,
       how_it_works_2,
       how_it_works_3,
-      tic_tac_toe_page
+      tic_tac_toe_page,
+      qr_code_page
     ]
   end
 
@@ -141,6 +142,22 @@ class Presentation
     {
       labels: [],
       sprites: []
+    }
+  end
+
+  def qr_code_page
+    {
+      labels: [
+        title("Links"),
+        { x: 200, y: 200, text: "RubyConf 2022:", size_enum: 5 },
+        { x: 200, y: 170, text: "Building a Commercial Game Engine", size_enum: 5 },
+        { x: 200, y: 140, text: "using mRuby and SDL by Amir Rajan", size_enum: 5 },
+        { x: 800, y: 200, text: "DragonRuby on itch.io", size_enum: 5 }
+      ],
+      sprites: [
+        { x: 200, y: 200, w: 400, h: 400, path: "/sprites/rubyconf2022.png", angle: 0 },
+        { x: 800, y: 200, w: 400, h: 400, path: "/sprites/itchio.png", angle: 0 }
+      ]
     }
   end
 
