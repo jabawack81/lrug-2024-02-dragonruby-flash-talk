@@ -1,16 +1,22 @@
 # frozen_string_literal: true
 
+require_relative "tic_tac_toe"
+
 class Presentation
+  WINDOW_WIDTH = 1280
+
   def initialize(args)
     @page = 0
     @args = args
   end
 
   def next_page
+    $tic_tac_toe = nil
     @page += 1 if @page < (pages.length - 1)
   end
 
   def prev_page
+    $tic_tac_toe = nil
     @page -= 1 if @page.positive?
   end
 
@@ -41,13 +47,15 @@ class Presentation
   def pages
     [
       title_page,
-      page_2,
-      page_3,
-      page_4,
-      page_5,
-      page_6,
-      page_7,
-      page_8
+      features_0,
+      features_1,
+      features_2,
+      features_3,
+      how_it_works_0,
+      how_it_works_1,
+      how_it_works_2,
+      how_it_works_3,
+      tic_tac_toe_page
     ]
   end
 
@@ -58,82 +66,125 @@ class Presentation
         sub_title("A Modern Game Engine for Everyone")
       ],
       sprites: [
-        {
-          x: 576,
-          y: 280,
-          w: 128,
-          h: 101,
-          path: "dragonruby.png",
-          angle: 0
-        }
+        { x: (WINDOW_WIDTH - 630) / 2, y: 80, w: 630, h: 500, path: "/sprites/dragonruby_logo.png", angle: 0 }
       ]
     }
   end
 
-  def page_2
+  def features_0
     {
-      labels: [title("dragonruby presentation page 2")],
+      labels: [
+        title("Features"),
+        bullet_point("* Zero Dependency Install", 0),
+        sub_bullet_point("Download, unzip, edit", 0)
+      ],
       sprites: []
     }
   end
 
-  def page_3
+  def features_1
+    page = features_0
+    page[:labels] << bullet_point("* Editor Agnostic", 1)
+    page[:labels] << sub_bullet_point("BYOI (Bring Your Own IDE)", 1)
+    page
+  end
+
+  def features_2
+    page = features_1
+    page[:labels] << bullet_point("* Cross Platform", 2)
+    page[:labels] << sub_bullet_point(
+      "PC, Mac, Linux, WASM, iOS, Android, Switch, XBOX One, and PS4", 2
+    )
+    page
+  end
+
+  def features_3
+    page = features_2
+    page[:labels] << bullet_point("* Lean, Fast, Hotloaded", 3)
+    page[:labels] << sub_bullet_point("Only 3,5MB of battletested and optimised C code", 3)
+    page
+  end
+
+  def how_it_works_0
     {
-      labels: [title("dragonruby presentation page 3")],
-      sprites: []
+      labels: [title("How it works")],
+      sprites: [
+        { x: (WINDOW_WIDTH - 1131) / 2, y: 0, w: 1131, h: 650, path: "/sprites/init_sdl.png", angle: 0 }
+      ]
     }
   end
 
-  def page_4
+  def how_it_works_1
     {
-      labels: [title("dragonruby presentation page 4")],
-      sprites: []
+      labels: [title("How it works")],
+      sprites: [
+        { x: (WINDOW_WIDTH - 1131) / 2, y: 0, w: 1131, h: 650, path: "/sprites/init_mruby.png", angle: 0 }
+      ]
     }
   end
 
-  def page_5
+  def how_it_works_2
     {
-      labels: [title("dragonruby presentation page 5")],
-      sprites: []
+      labels: [title("How it works")],
+      sprites: [
+        { x: (WINDOW_WIDTH - 1131) / 2, y: 0, w: 1131, h: 650, path: "/sprites/game_loop.png", angle: 0 }
+      ]
     }
   end
 
-  def page_6
+  def how_it_works_3
     {
-      labels: [title("dragonruby presentation page 6")],
-      sprites: []
+      labels: [title("How it works")],
+      sprites: [
+        { x: (WINDOW_WIDTH - 1131) / 2, y: 0, w: 1131, h: 650, path: "/sprites/sample_game.png", angle: 0 }
+      ]
     }
   end
 
-  def page_7
+  def tic_tac_toe_page
+    if @page == 9
+      $tic_tac_toe ||= TicTacToe.new
+      $tic_tac_toe.args = @args
+      $tic_tac_toe.tick
+    end
     {
-      labels: [title("dragonruby presentation page 7")],
-      sprites: []
-    }
-  end
-
-  def page_8
-    {
-      labels: [title("dragonruby presentation page 8")],
+      labels: [],
       sprites: []
     }
   end
 
   def title(text)
     {
-      x: 690,
+      x: (WINDOW_WIDTH / 2),
       y: 690,
       text: text,
-      size_enum: 15,
-      # alignment_enum: 1,
+      size_enum: 20,
       anchor_x: 0.5,
       anchor_y: 0.5
     }
   end
 
+  def bullet_point(text, index)
+    {
+      x: 100,
+      y: 600 - (index * 60),
+      text: text,
+      size_enum: 6
+    }
+  end
+
+  def sub_bullet_point(text, index)
+    {
+      x: 140,
+      y: 565 - (index * 60),
+      text: text,
+      size_enum: 2
+    }
+  end
+
   def sub_title(text)
     {
-      x: 690,
+      x: (WINDOW_WIDTH / 2),
       y: 630,
       text: text,
       size_enum: 15,
